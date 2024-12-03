@@ -42,7 +42,7 @@ def menu_professores(cursor):
 
         elif opcao == '2':
             while True:
-                nome = pergunta_string("Insira o nome do professor: ")
+                nome = pergunta_string("Digite o nome do professor")
                 if not nome:
                     break
 
