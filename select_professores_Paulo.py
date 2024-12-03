@@ -9,13 +9,14 @@ def menu_principal(cursor):
     print("====" * 42)
     print("1) Buscar por id professor")
     print("2) Buscar por nome do professor")
-    print("3) Buscar por cpf do professor")
-    print("4) Buscar por email do professor")
+    print("3) Buscar por email do professor")
+    print("4) Buscar por cpf do professor")
     print("5) Buscar por telefone do professor")
     print("====" * 42)
     print("0) Para voltar")
 
 def menu_professores(cursor):
+    global email
     while True:
         menu_principal(cursor)
 
@@ -53,12 +54,12 @@ def menu_professores(cursor):
         elif opcao == '3':
             while True:
                 email = pergunta_string("Insira o email do professor: ")
-                if not nome:
+                if not email:
                     break
 
-        resposta = (email, cursor)
-        print(f"\nAo pesquisar pelo emaIL {email} na tabela professores:")
-        exibe_resposta_lista(resposta)
+                resposta = buscar_email_professor(email, cursor)
+                print(f"\nAo pesquisar pelo emaIL {email} na tabela professores:")
+                exibe_resposta_lista(resposta)
 
 
 def exibe_resposta_lista(lista):
@@ -111,7 +112,7 @@ def buscar_id_professor(cursor,id_professor):
                     'id_professor': resposta[0],
                     'nome': resposta[1],
                     'cpf': resposta[2],
-                    'E-mail': resposta[3],
+                    'e-mail': resposta[3],
                     'Telefone': resposta[4]
                 }
 

@@ -34,7 +34,7 @@ def Atualizar(cursor, conn):
 
         elif escolha == '3':
             email = pergunta_string("Digite seu email")
-            dados = buscar_email_professor(cursor, email)
+            dados = buscar_email_professor(email,cursor)
         else:
             print("Opção inválida.")
             return
@@ -46,7 +46,7 @@ def Atualizar(cursor, conn):
 
             for i, registro in enumerate(dados):
                 print(
-                    f" {i + 1}) | {registro['id_professor']} | {registro['cpf']} | {registro['nome']}")
+                    f" {i + 1}) | {registro['id_professor']} |  | Nome {registro['nome']} CPF :{registro['cpf']} {registro['e-mail']} ")
 
             try:
                 op = int(input("Escolha uma opção: "))
@@ -60,8 +60,8 @@ def Atualizar(cursor, conn):
             escolhido = dados[op - 1]
         elif isinstance(dados, dict):
             escolhido = dados
-            print(f" ID: {escolhido['id_professor']} Cpf: {escolhido['cpf']} Nome: {escolhido['nome']}")
-
+            print(f'====='*len(dados))
+            print(f" |ID = {escolhido['id_professor']}|  | Nome: {escolhido['nome']}|Cpf ={escolhido['cpf']} E-mail= {escolhido ['e-mail']} ")
         while True:
 
 
