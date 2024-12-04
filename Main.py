@@ -37,7 +37,11 @@ def selecionar_tabela():
         elif op not in "1234567":
             print(f"Opção Incorreta Tente novamente")
             continue
+
         return op
+
+
+
 
 
 

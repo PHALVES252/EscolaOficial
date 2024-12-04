@@ -1,17 +1,16 @@
 import sqlite3
 from time import sleep
 
-conn = sqlite3.connect('../ProjetoEscola_Paulo/escola.db')
+conn = sqlite3.connect('escola.db')
 cursor = conn.cursor()
 
 
 def menu_principal(cursor):
     print("====" * 42)
-    print("1) Buscar por id professor")
-    print("2) Buscar por nome do professor")
-    print("3) Buscar por email do professor")
-    print("4) Buscar por cpf do professor")
-    print("5) Buscar por telefone do professor")
+    print("1) Buscar por nome do professor")
+    print("2) Buscar por email do professor")
+    print("3) Buscar por cpf do professor")
+    print("4) Buscar por telefone do professor")
     print("====" * 42)
     print("0) Para voltar")
 
@@ -25,23 +24,8 @@ def menu_professores(cursor):
         if opcao == '0':
             return
 
+
         elif opcao == '1':
-            print()
-            print("===" * 45)
-            print("Pesquisar pelo id do professor")
-            print("=====" * 45)
-            while True:
-                id_professor = pergunta_inteiro("Insira o id do professor")
-                if id_professor is None:
-                    break
-
-                else:
-
-                    resposta = buscar_id_professor(cursor,id_professor)
-                    print(f'Ao pesquisar  pelo id {id_professor} na tabela professor encontramos')
-                    exibe_resposta_dicionario(resposta)
-
-        elif opcao == '2':
             while True:
                 nome = pergunta_string("Digite o nome do professor")
                 if not nome:
@@ -51,7 +35,7 @@ def menu_professores(cursor):
                 print(f"\nAo pesquisar pelo nome {nome} na tabela professores:")
                 exibe_resposta_lista(resposta)
 
-        elif opcao == '3':
+        elif opcao == '2':
             while True:
                 email = pergunta_string("Insira o email do professor: ")
                 if not email:
@@ -60,6 +44,26 @@ def menu_professores(cursor):
                 resposta = buscar_email_professor(email, cursor)
                 print(f"\nAo pesquisar pelo emaIL {email} na tabela professores:")
                 exibe_resposta_lista(resposta)
+
+        elif opcao == '3':
+            while True:
+                cpf = pergunta_string("Insira o cpf do professor")
+                if not cpf:
+                    break
+
+                resposta = buscar_cpf_professor(cpf,cursor)
+                print(f"\n Ao pesquisar pelo CPF: {cpf} localizamos")
+                exibe_resposta_lista(resposta)
+
+        elif opcao == '4':
+            while True:
+                telefone = pergunta_string("Insira o Telefone do professor")
+                if not telefone:
+                    break
+
+                resposta = buscar_telefone_professor(telefone, professor)
+                print(f'\n Ao pesquisar pelo telefone {telefone} encontramos')
+                exibe_resposta_dicionario(resposta)
 
 
 def exibe_resposta_lista(lista):
@@ -129,27 +133,6 @@ def buscar_id_professor(cursor,id_professor):
         return None
 
 
-
-
-
-    # cursor.execute('''SELECT * FROM professores WHERE id_professor=?''', (id_professor,))
-    # resposta = cursor.fetchone()
-    #
-    # if resposta:
-    #
-    #     return {
-    #         "Nome": resposta[1],
-    #         "cpf": resposta[2],
-    #         "E-mail": resposta[3],
-    #         "Telefone": resposta[4],
-    #         "Formação": resposta[5]
-    #
-    #     }
-    #
-    # else:
-    #     return None
-
-
 def exibe_resposta_dicionario(dicionario):
     if not dicionario:
         print("  Vixe! :-(  Nenhum registro foi encontrado.")
@@ -158,7 +141,7 @@ def exibe_resposta_dicionario(dicionario):
             print(f"  O campo: '{chave}' contém o valor: '{valor}'.")
 
 
-def buscar_nome_professor(cursor, nome):
+def buscar_nome_professor(nome, cursor):
     # Verifica se o cursor é válido antes de executar a consulta
     if not hasattr(cursor, 'execute'):
         print("Erro: O cursor não é válido.")
@@ -218,4 +201,16 @@ def buscar_cpf_professor(cpf, cursor):
             'nome': resposta[1],
             'cpf': resposta[2],
             'telefone': resposta[4]
+        }
+
+
+def buscar_telefone_professor(telefone, cursor):
+    cursor.execute('''SELECT * FROM PROFESSORES WHERE email=?''', (telefone,))
+    resposta = cursor.fetchone()
+
+    if resposta:
+        return {
+            'id_professor': resposta[0],
+            'nome': resposta[1],
+            'cpf': resposta[2]
         }

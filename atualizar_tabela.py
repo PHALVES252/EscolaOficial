@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect('../ProjetoEscola_Paulo/escola.db')
+conn = sqlite3.connect('escola.db')
 cursor = conn.cursor()
 
 from select_professores_Paulo import buscar_nome_professor, buscar_id_professor, buscar_email_professor, menu_principal
@@ -17,16 +17,6 @@ def Atualizar(cursor, conn):
 
         if escolha == "" or escolha == '0':
             return
-        elif escolha == '1':
-            try:
-
-                id_professor = pergunta_inteiro("Digite o ID do professor: ")
-                if id_professor==" ":
-                    return
-                dados = buscar_id_professor(cursor, id_professor)
-
-            except ValueError:
-                print("ID inválido. Por favor, digite um número.")
 
         elif escolha == '2':
             nome = pergunta_string("Digite o nome do professor: ")
@@ -58,6 +48,8 @@ def Atualizar(cursor, conn):
                 return
 
             escolhido = dados[op - 1]
+
+
         elif isinstance(dados, dict):
             escolhido = dados
             print(f'====='*len(dados))
