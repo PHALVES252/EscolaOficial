@@ -3,14 +3,15 @@ import sqlite3
 conn = sqlite3.connect('escola.db')
 cursor = conn.cursor()
 
-from select_professores_Paulo import buscar_nome_professor, buscar_id_professor, buscar_email_professor, menu_principal, \
+from select_professores_Paulo import buscar_nome_professor, buscar_email_professor, menu_principal, \
     buscar_telefone_professor
-from select_professores_Paulo import pergunta_string, pergunta_inteiro
+from select_professores_Paulo import pergunta_string
 
 
-def Atualizar(cursor, conn):
+def atualizar():
 
-    global dados, escolhido
+
+    global escolhido
     menu_principal()
 
     while True:
@@ -66,7 +67,7 @@ def Atualizar(cursor, conn):
 
             nome = input("Digite o novo nome: ")
             cpf = input('Digite o cpf correto: ')
-            email = input('Dgite o novo email: ')
+            email = input('Digite o novo email: ')
             telefone = input('Digite o telefone: ')
             formacao = input('Digite a formação: ')
             if nome.isdigit() or len(nome) < 2:
