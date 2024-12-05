@@ -1,11 +1,11 @@
 import sqlite3
-from time import sleep
+
 
 conn = sqlite3.connect('escola.db')
 cursor = conn.cursor()
 
 
-def menu_principal(cursor):
+def menu_principal():
     print("====" * 42)
     print("1) Buscar por nome do professor")
     print("2) Buscar por email do professor")
@@ -14,10 +14,10 @@ def menu_principal(cursor):
     print("====" * 42)
     print("0) Para voltar")
 
-def menu_professores(cursor):
-    global email
+def menu_professores():
+
     while True:
-        menu_principal(cursor)
+        menu_principal()
 
         opcao = input("Escolha uma opção (1/5) ou 0 para voltar")
 
@@ -31,7 +31,7 @@ def menu_professores(cursor):
                 if not nome:
                     break
 
-                resposta = buscar_nome_professor(nome, cursor)
+                resposta = buscar_nome_professor(cursor,nome)
                 print(f"\nAo pesquisar pelo nome {nome} na tabela professores:")
                 exibe_resposta_lista(resposta)
 
@@ -41,7 +41,7 @@ def menu_professores(cursor):
                 if not email:
                     break
 
-                resposta = buscar_email_professor(email, cursor)
+                resposta = buscar_email_professor( cursor,email)
                 print(f"\nAo pesquisar pelo emaIL {email} na tabela professores:")
                 exibe_resposta_lista(resposta)
 
@@ -61,7 +61,7 @@ def menu_professores(cursor):
                 if not telefone:
                     break
 
-                resposta = buscar_telefone_professor(telefone, professor)
+                resposta = buscar_telefone_professor(telefone, cursor)
                 print(f'\n Ao pesquisar pelo telefone {telefone} encontramos')
                 exibe_resposta_dicionario(resposta)
 
@@ -93,7 +93,7 @@ def pergunta_inteiro(mensagem):
 
             return resp
 
-        except Exception as e:
+        except ValueError:
             print("Insira os dados validos")
 
 
@@ -141,7 +141,7 @@ def exibe_resposta_dicionario(dicionario):
             print(f"  O campo: '{chave}' contém o valor: '{valor}'.")
 
 
-def buscar_nome_professor(nome, cursor):
+def buscar_nome_professor(cursor ,nome):
     # Verifica se o cursor é válido antes de executar a consulta
     if not hasattr(cursor, 'execute'):
         print("Erro: O cursor não é válido.")
@@ -163,8 +163,8 @@ def buscar_nome_professor(nome, cursor):
                     'id_professor': linha[0],
                     'nome': linha[1],
                     'cpf': linha[2],
-                    'E-mail': linha[3],
-                    'Telefone': linha[4]
+                    'email': linha[3],
+                    'telefone': linha[4]
                 })
 
             return registros  # Retorna os registros encontrados
@@ -180,7 +180,7 @@ def buscar_nome_professor(nome, cursor):
 
 def buscar_email_professor(cursor,email):
     cursor.execute('''SELECT * FROM PROFESSORES WHERE email=?''', (email,))
-    resposta = cursor.fetchone()
+    resposta = cursor.fetchall()
 
     if resposta:
         return {

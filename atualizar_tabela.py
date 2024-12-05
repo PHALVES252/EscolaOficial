@@ -3,14 +3,15 @@ import sqlite3
 conn = sqlite3.connect('escola.db')
 cursor = conn.cursor()
 
-from select_professores_Paulo import buscar_nome_professor, buscar_id_professor, buscar_email_professor, menu_principal
+from select_professores_Paulo import buscar_nome_professor, buscar_id_professor, buscar_email_professor, menu_principal, \
+    buscar_telefone_professor
 from select_professores_Paulo import pergunta_string, pergunta_inteiro
 
 
 def Atualizar(cursor, conn):
 
-    global dados
-    menu_principal(cursor)
+    global dados, escolhido
+    menu_principal()
 
     while True:
         escolha = input('Escolha uma opção')
@@ -18,13 +19,17 @@ def Atualizar(cursor, conn):
         if escolha == "" or escolha == '0':
             return
 
-        elif escolha == '2':
+        elif escolha == '1':
             nome = pergunta_string("Digite o nome do professor: ")
             dados = buscar_nome_professor(cursor, nome)
 
-        elif escolha == '3':
+        elif escolha == '2':
             email = pergunta_string("Digite seu email")
             dados = buscar_email_professor(email,cursor)
+
+        elif escolha =='3':
+            telefone = pergunta_string("Digite seu telefone")
+            dados = buscar_telefone_professor(telefone, cursor)
         else:
             print("Opção inválida.")
             return
@@ -36,7 +41,8 @@ def Atualizar(cursor, conn):
 
             for i, registro in enumerate(dados):
                 print(
-                    f" {i + 1}) | {registro['id_professor']} |  | Nome {registro['nome']} CPF :{registro['cpf']} {registro['e-mail']} ")
+                    f" {i + 1}) | {registro['id_professor']} |  | Nome {registro['nome']} CPF :{registro['cpf']} "
+                    f"Email {registro['email']} Telefone {registro['telefone']}")
 
             try:
                 op = int(input("Escolha uma opção: "))
@@ -53,7 +59,8 @@ def Atualizar(cursor, conn):
         elif isinstance(dados, dict):
             escolhido = dados
             print(f'====='*len(dados))
-            print(f" |ID = {escolhido['id_professor']}|  | Nome: {escolhido['nome']}|Cpf ={escolhido['cpf']} E-mail= {escolhido ['e-mail']} ")
+            print(f" |ID = {escolhido['id_professor']}|  | Nome: {escolhido['nome']}|Cpf ={escolhido['cpf']} "
+                  f"E-mail= {escolhido ['email']} Telefone: {escolhido['telefone']} ")
         while True:
 
 
