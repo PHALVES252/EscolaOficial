@@ -3,7 +3,7 @@ from time import sleep
 from criacao_tabelas_Paulo import criar2
 from insercao_tabelas_Paulo import inserir2
 from pesquisa_tabela2 import pesquisar2
-from atualizar_tabela import Atualizar
+from atualizar_tabela import atualizar
 from DeletarDados import deletar2
 
 # Menu de seleção de tabela
@@ -83,7 +83,7 @@ while True:
             pesquisar2(tabela, cursor, conn)
 
         elif opcao == '4':
-            Atualizar(cursor,conn)
+            atualizar()
 
         elif opcao == '5':
           pass
