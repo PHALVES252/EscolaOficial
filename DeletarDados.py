@@ -5,9 +5,21 @@ cursor = conn.cursor()
 
 
 def deletar2():
+
+
+
     while True:
-        iden = int(input("Digite o id do registro do professor que deseja cancelar"))
-        cursor.execute('''SELECT * FROM professores WHERE id_professor=?''', (iden,))
+        print("1) Nome")
+        print("2) E-mail")
+        print("3) Telefone")
+        print("4) Cpf")
+
+        dicionario= {1:'nome',2:'email'}
+        escolha=int(input("Escolha uma opção de busca"))
+
+        valor_busca = input(f"Digite o {dicionario[escolha]} do registro do professor que deseja cancelar")
+        query = f'''SELECT * FROM professores WHERE {dicionario[escolha]}=?'''
+        cursor.execute(query,(valor_busca,))
         resposta = cursor.fetchone()
 
         if resposta:
@@ -24,10 +36,18 @@ def deletar2():
 
         if op in 'sS':
 
-            cursor.execute('''DELETE FROM professores WHERE id_professor=?''', (iden,))
+            cursor.execute(f'''DELETE FROM professores WHERE {dicionario[escolha]}=?''', (valor_busca,))
             conn.commit()
-            print(" Registro Apagado com sucesso")
+
+            if cursor.rowcount>0:
+                print(" Registro Apagado com sucesso")
+
+            else:
+                print("Registro não apagador")
 
         elif op in 'Nn':
             print(" Operação cancelada")
             break
+
+
+deletar2()
