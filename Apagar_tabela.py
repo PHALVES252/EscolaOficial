@@ -1,11 +1,13 @@
 import sqlite3
 
-conn = sqlite3.connect('../ProjetoEscola_Paulo/escola.db')
+conn = sqlite3.connect('escola.db')
 cursor = conn.cursor()
 
 print("Conexão estabelecida com sucesso")
 
 
-cursor.execute('''''')
+def apagar(tabela):
+    cursor.execute('''DROP TABLE {tabela}''')
+    conn.commit()
 
 

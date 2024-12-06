@@ -4,7 +4,7 @@ conn = sqlite3.connect("escola.db")
 cursor = conn.cursor()
 
 
-def deletar2():
+def deletar():
 
 
 
@@ -28,7 +28,7 @@ def deletar2():
                 f",Telefone atual{resposta[4]} ")
 
         else:
-            print("Não foi possivel localizar o id informado\n"
+            print("Não foi possivel localizar o  informado\n"
                   "Verifique as informações e tente novamente ")
             continue
 
@@ -50,4 +50,3 @@ def deletar2():
             break
 
 
-deletar2()

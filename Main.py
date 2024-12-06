@@ -4,7 +4,8 @@ from criacao_tabelas_Paulo import criar2
 from insercao_tabelas_Paulo import inserir2
 from pesquisa_tabela2 import pesquisar2
 from atualizar_tabela import atualizar
-from DeletarDados import deletar2
+from DeletarDados import  deletar
+from Apagar_tabela import  apagar
 
 # Menu de seleção de tabela
 conn = sqlite3.connect('escola.db')
@@ -12,7 +13,6 @@ cursor = conn.cursor()
 
 
 print("Conexão estabelecida com sucesso")
-
 
 def selecionar_tabela():
     while True:
@@ -34,13 +34,10 @@ def selecionar_tabela():
         if op == "0":
             break
 
-        elif op not in "1234567":
-            print(f"Opção Incorreta Tente novamente")
-            continue
-
-        return op
-
-
+        elif op in "1234567":
+            return op
+        print(" Alternativa invalida tente Novamente")
+        sleep(1)
 
 
 
@@ -74,6 +71,9 @@ while True:
 
         tabela = selecionar_tabela()
 
+        if tabela == '0':
+            break
+
         if opcao == '1':
             criar2(tabela, cursor, conn)
         elif opcao == '2':
@@ -86,6 +86,9 @@ while True:
             atualizar()
 
         elif opcao == '5':
-          pass
+            apagar(tabela)
+
+
+
 
         sleep(2)
